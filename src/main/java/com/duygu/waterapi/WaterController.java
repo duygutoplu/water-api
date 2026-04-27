@@ -32,4 +32,15 @@ public class WaterController {
         waterList.removeIf(w -> w.getId() == id);
         return "Deleted";
     }
+    
+    @GetMapping("/water/total")
+public int getTotalWater() {
+    int total = 0;
+
+    for (WaterIntake w : waterList) {
+        total += w.getAmount();
+    }
+
+    return total;
+}
 }
