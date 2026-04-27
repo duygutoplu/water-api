@@ -26,4 +26,10 @@ public class WaterController {
         waterList.add(newWater);
         return newWater;
     }
+
+    @DeleteMapping("/water/{id}")
+    public String deleteWater(@PathVariable int id) {
+        waterList.removeIf(w -> w.getId() == id);
+        return "Deleted";
+    }
 }
