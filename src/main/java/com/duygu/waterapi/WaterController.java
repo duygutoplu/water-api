@@ -9,6 +9,7 @@ public class WaterController {
 
     private List<WaterIntake> waterList = new ArrayList<>();
     private int currentId = 1;
+    private int dailyGoal = 2000;
 
     @GetMapping("/water")
     public List<WaterIntake> getWater() {
@@ -32,15 +33,32 @@ public class WaterController {
         waterList.removeIf(w -> w.getId() == id);
         return "Deleted";
     }
-    
-    @GetMapping("/water/total")
-public int getTotalWater() {
-    int total = 0;
 
-    for (WaterIntake w : waterList) {
-        total += w.getAmount();
+    @GetMapping("/water/total")
+    public int getTotalWater() {
+        int total = 0;
+
+        for (WaterIntake w : waterList) {
+            total += w.getAmount();
+        }
+
+        return total;
     }
 
-    return total;
-}
+    @PostMapping("/goal")
+    public String setGoal(@RequestParam int goal) {
+        this.dailyGoal = goal;
+        return "Goal set to " + goal;
+    }
+
+    @GetMapping("/water/progress")
+    public double getProgress() {
+        int total = 0;
+
+        for (WaterIntake w : waterList) {
+            total += w.getAmount();
+        }
+
+        return (total * 100.0) / dailyGoal;
+    }
 }
