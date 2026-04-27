@@ -1,6 +1,5 @@
 package com.duygu.waterapi;
 
-
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,5 +13,17 @@ public class WaterController {
     @GetMapping("/water")
     public List<WaterIntake> getWater() {
         return waterList;
+    }
+
+    @PostMapping("/water")
+    public WaterIntake addWater(@RequestBody WaterIntake water) {
+        WaterIntake newWater = new WaterIntake(
+            currentId++,
+            water.getAmount(),
+            water.getDate()
+        );
+
+        waterList.add(newWater);
+        return newWater;
     }
 }
