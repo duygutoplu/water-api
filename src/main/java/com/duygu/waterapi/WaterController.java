@@ -30,8 +30,15 @@ public class WaterController {
 
     @DeleteMapping("/water/{id}")
     public String deleteWater(@PathVariable int id) {
-        waterList.removeIf(w -> w.getId() == id);
+        waterList.removeIf(w -> w.getId().equals(id));
         return "Deleted";
+    }
+
+    @DeleteMapping("/water")
+    public String resetWater() {
+        waterList.clear();
+        currentId = 1;
+        return "All water data cleared";
     }
 
     @GetMapping("/water/total")
@@ -49,6 +56,11 @@ public class WaterController {
     public String setGoal(@RequestParam int goal) {
         this.dailyGoal = goal;
         return "Goal set to " + goal;
+    }
+
+    @GetMapping("/goal")
+    public int getGoal() {
+        return dailyGoal;
     }
 
     @GetMapping("/water/progress")
